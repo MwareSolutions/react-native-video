@@ -322,8 +322,6 @@ class Video extends Component<Props> {
     });
     this.videoElement = createElement('video', {
       id:source.ref,
-      //autoPlay:true,
-      //src: source.uri || source,
       onLoadStart: this._onLoadStart,
       onLoadedData: this._onLoad,
       onLoad: initVideoJS(source.uri, source.type, source.drm.headers, source.drm.licenseServer, source.ref, this.props.adTagUrl, this.props.streamType),
@@ -334,11 +332,10 @@ class Video extends Component<Props> {
       onLoadedMetadata: this._onTimedMetadata,
       onCanPlay: this._onReadyForDisplay,
       onStalled: this._onPlaybackStalled,
-      controls:"controls",
-      style: {
-          display: "block",
-          position: "relative",
-      },
+      style: [this.props.style, {
+         display: "block",
+         position: "relative",
+      }]
     });
     if(source.full == false){
       this.grouped = createElement('div', {
