@@ -33,6 +33,10 @@ public class ReactExoplayerViewManager extends ViewGroupManager<ReactExoplayerVi
     private static final String PROP_SRC_TYPE = "type";
     private static final String PROP_SRC_AD_TAG_URL = "adTagUrl";
     private static final String PROP_SRC_DRM = "drm";
+    private static final String PROP_SRC_ANALYTICS = "analytics";
+    private static final String PROP_SRC_ANALYTICS_VIEWERID = "viewer_id";
+    private static final String PROP_SRC_ANALYTICS_DEVICE = "device";
+    private static final String PROP_SRC_ANALYTICS_BEACONURL = "beacon_url";
     private static final String PROP_SRC_DRM_TYPE = "type";
     private static final String PROP_SRC_DRM_LICENSESERVER = "licenseServer";
     private static final String PROP_SRC_DRM_HEADERS = "headers";
@@ -118,6 +122,7 @@ public class ReactExoplayerViewManager extends ViewGroupManager<ReactExoplayerVi
         String adTagUrl = src.hasKey(PROP_SRC_AD_TAG_URL) ? src.getString(PROP_SRC_AD_TAG_URL) : null;
         Map<String, String> headers = src.hasKey(PROP_SRC_HEADERS) ? toStringMap(src.getMap(PROP_SRC_HEADERS)) : null;
         ReadableMap drm = src.hasKey(PROP_SRC_DRM) ? src.getMap(PROP_SRC_DRM) : null;
+        ReadableMap analytics = src.hasKey(PROP_SRC_ANALYTICS) ? src.getMap(PROP_SRC_ANALYTICS) : null;
 
         if (!TextUtils.isEmpty(adTagUrl)) {
             videoView.setAdTagUrl(Uri.parse(adTagUrl));
@@ -154,6 +159,12 @@ public class ReactExoplayerViewManager extends ViewGroupManager<ReactExoplayerVi
                        // Log.d("Disabling TextureView (needed for DRM)");
                         videoView.setUseTextureView(false);
                     }
+                }
+                if (analytics != null) {
+                    String viewerId = analytics.hasKey(PROP_SRC_ANALYTICS_VIEWERID) ? drm.getString(PROP_SRC_ANALYTICS_VIEWERID) : null;
+                    String device = analytics.hasKey(PROP_SRC_ANALYTICS_DEVICE) ? drm.getString(PROP_SRC_ANALYTICS_DEVICE) : null;
+                    String beaconUrl = analytics.hasKey(PROP_SRC_ANALYTICS_BEACONURL) ? drm.getString(PROP_SRC_ANALYTICS_BEACONURL) : null;
+                    videoView.setAnalytics(viewerId, device, beaconUrl);
                 }
             }
         } else {

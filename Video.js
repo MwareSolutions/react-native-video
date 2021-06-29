@@ -80,7 +80,7 @@ export default class Video extends Component {
   }
 
   seek = (time, tolerance = 100) => {
-    if (isNaN(time)) {throw new Error('Specified time is not a number');}
+    if (isNaN(time)) { throw new Error('Specified time is not a number'); }
 
     if (Platform.OS === 'ios') {
       this.setNativeProps({
@@ -271,7 +271,7 @@ export default class Video extends Component {
 
   render() {
     const resizeMode = this.props.resizeMode;
-    const source =this.props.source; // resolveAssetSource(this.props.source) || {};
+    const source = this.props.source; // resolveAssetSource(this.props.source) || {};
     const shouldCache = !source.__packager_asset;
 
     let uri = source.uri || '';
@@ -287,7 +287,7 @@ export default class Video extends Component {
     const isAsset = !!(uri && uri.match(/^(assets-library|ipod-library|file|content|ms-appx|ms-appdata):/));
 
     let nativeResizeMode;
-  
+
     const RCTVideoInstance = this.getViewManagerConfig('RCTVideo');
 
     if (resizeMode === VideoResizeMode.stretch) {
@@ -305,7 +305,7 @@ export default class Video extends Component {
       style: [styles.base, nativeProps.style],
       resizeMode: nativeResizeMode,
       adTagUrl: this.props.adTagUrl,
-      streamType: this.props.streamType, 
+      streamType: this.props.streamType,
       src: {
         uri,
         isNetwork,
@@ -316,6 +316,7 @@ export default class Video extends Component {
         patchVer: source.patchVer || 0,
         requestHeaders: source.headers ? this.stringsOnlyObject(source.headers) : {},
         drm: source.drm,
+        analytics: source.analytics,
         adTagUrl: this.props.adTagUrl,
       },
       onVideoLoadStart: this._onLoadStart,
@@ -366,7 +367,7 @@ export default class Video extends Component {
       <View ref={(videoContainer) => {
         this._videoContainer = videoContainer;
         return videoContainer;
-        }} style={[nativeProps.style, videoStyle]}>
+      }} style={[nativeProps.style, videoStyle]}>
         <RCTVideo
           ref={this._assignRoot}
           {...nativeProps}
@@ -427,6 +428,11 @@ Video.propTypes = {
   source: PropTypes.oneOfType([
     PropTypes.shape({
       uri: PropTypes.string,
+      analytics: PropTypes.shape({
+        viewer_id: PropTypes.string,
+        device: PropTypes.string,
+        beacon_url: PropTypes.string
+      }),
       drm: PropTypes.shape({
         type: PropTypes.oneOf([
           DRMType.CLEARKEY, DRMType.FAIRPLAY, DRMType.WIDEVINE, DRMType.PLAYREADY

@@ -22,6 +22,7 @@ android {
 }
 
 dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.facebook.react:react-native:${safeExtGet('reactNativeVersion', '+')}"
 
     implementation project(':exoplayer-library-core')

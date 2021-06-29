@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.akamai.android.exoplayer2loader.AkamaiExoPlayerLoader;
 import com.brentvatne.react.R;
 import com.brentvatne.receiver.AudioBecomingNoisyReceiver;
 import com.brentvatne.receiver.BecomingNoisyListener;
@@ -28,6 +29,7 @@ import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
+import com.google.android.exoplayer2.audio.AudioAttributes;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
@@ -171,12 +173,21 @@ class ReactExoplayerView extends FrameLayout implements
     private boolean controls;
     public UUID drmUUID = null;
     public String drmLicenseUrl = null;
-    public String[] drmLicenseHeader = null;    // \ End props
+    public String[] drmLicenseHeader = null; 
+    public String analyticsViewerId = null;
+    public String analyticsDevice = null;
+    public String analyticsBeaconUrl = null;
+
+   // \ End props
 
     // React
     private final ThemedReactContext themedReactContext;
     private final AudioManager audioManager;
     private final AudioBecomingNoisyReceiver audioBecomingNoisyReceiver;
+
+
+    //Akamai
+    private AkamaiExoPlayerLoader exoPlayerLoader;
 
     private final Handler progressHandler = new Handler() {
         @Override
@@ -424,6 +435,13 @@ class ReactExoplayerView extends FrameLayout implements
         view.layout(view.getLeft(), view.getTop(), view.getMeasuredWidth(), view.getMeasuredHeight());
     }
 
+    private void setUpAkamaiMediaAnalytics(Context context, String streamUrl){
+        exoPlayerLoader = new AkamaiExoPlayerLoader(context, this.analyticsBeaconUrl, true);
+        exoPlayerLoader.setData("device", this.analyticsDevice);
+        exoPlayerLoader.setViewerId(this.analyticsViewerId);
+        exoPlayerLoader.initializeLoader(player, streamUrl);
+    }
+
     private void initializePlayer() {
         ReactExoplayerView self = this;
         // This ensures all props have been settled, to avoid async racing conditions.
@@ -431,6 +449,11 @@ class ReactExoplayerView extends FrameLayout implements
             @Override
             public void run() {
                 if (player == null) {
+                    AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                            .setUsage(C.USAGE_MEDIA)
+                            .setContentType(C.CONTENT_TYPE_MOVIE)
+                            .build();
+
                     TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory();
                     trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
                     trackSelector.setParameters(trackSelector.buildUponParameters().setMaxVideoBitrate(maxBitRate == 0 ? Integer.MAX_VALUE : maxBitRate));
@@ -463,6 +486,7 @@ class ReactExoplayerView extends FrameLayout implements
                             trackSelector, defaultLoadControl, null, bandwidthMeter);
                     player.addListener(self);
                     player.addMetadataOutput(self);
+                    player.setAudioAttributes(audioAttributes, /* handleAudioFocus= */ true);
                     exoPlayerView.setPlayer(player);
                     audioBecomingNoisyReceiver.setListener(self);
                     bandwidthMeter.addEventListener(new Handler(), self);
@@ -471,8 +495,14 @@ class ReactExoplayerView extends FrameLayout implements
 
                     PlaybackParameters params = new PlaybackParameters(rate, 1f);
                     player.setPlaybackParameters(params);
+                 
                 }
             if(srcUri != null){
+                //start Akamai analytics
+                if(analyticsBeaconUrl != null){
+                    setUpAkamaiMediaAnalytics(getContext(), srcUri.toString());
+                }
+
                 if (srcUri != null && srcUri.toString().contains("udp:") || srcUri.toString().contains("rtp:")) {
 
                     ArrayList<MediaSource> mediaSourceList = buildTextSources();
@@ -679,6 +709,7 @@ class ReactExoplayerView extends FrameLayout implements
             trackSelector = null;
             player = null;
         }
+        exoPlayerLoader.releaseLoader();
         progressHandler.removeMessages(SHOW_PROGRESS);
         themedReactContext.removeLifecycleEventListener(this);
         audioBecomingNoisyReceiver.removeListener();
@@ -1460,6 +1491,15 @@ class ReactExoplayerView extends FrameLayout implements
     public void setDrmLicenseHeader(String[] header){
         Log.d("setDrmLicenseHeader", header.toString());
         this.drmLicenseHeader = header;
+    }
+
+    public void setAnalytics(String viewerID, String device, String beaconUrl){
+        Log.d("setAnalytics", viewerID.toString());
+        Log.d("setAnalytics", device.toString());
+        Log.d("setAnalytics", beaconUrl.toString());
+        this.analyticsViewerId = viewerID;
+        this.analyticsDevice = device;
+        this.analyticsBeaconUrl = beaconUrl;
     }
 
 
