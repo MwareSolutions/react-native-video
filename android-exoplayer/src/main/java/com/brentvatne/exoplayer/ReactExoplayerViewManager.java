@@ -161,9 +161,9 @@ public class ReactExoplayerViewManager extends ViewGroupManager<ReactExoplayerVi
                     }
                 }
                 if (analytics != null) {
-                    String viewerId = analytics.hasKey(PROP_SRC_ANALYTICS_VIEWERID) ? drm.getString(PROP_SRC_ANALYTICS_VIEWERID) : null;
-                    String device = analytics.hasKey(PROP_SRC_ANALYTICS_DEVICE) ? drm.getString(PROP_SRC_ANALYTICS_DEVICE) : null;
-                    String beaconUrl = analytics.hasKey(PROP_SRC_ANALYTICS_BEACONURL) ? drm.getString(PROP_SRC_ANALYTICS_BEACONURL) : null;
+                    String viewerId = analytics.hasKey(PROP_SRC_ANALYTICS_VIEWERID) ? analytics.getString(PROP_SRC_ANALYTICS_VIEWERID) : null;
+                    String device = analytics.hasKey(PROP_SRC_ANALYTICS_DEVICE) ? analytics.getString(PROP_SRC_ANALYTICS_DEVICE) : null;
+                    String beaconUrl = analytics.hasKey(PROP_SRC_ANALYTICS_BEACONURL) ? analytics.getString(PROP_SRC_ANALYTICS_BEACONURL) : null;
                     videoView.setAnalytics(viewerId, device, beaconUrl);
                 }
             }

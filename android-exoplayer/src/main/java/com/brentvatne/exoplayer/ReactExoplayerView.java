@@ -709,7 +709,9 @@ class ReactExoplayerView extends FrameLayout implements
             trackSelector = null;
             player = null;
         }
-        exoPlayerLoader.releaseLoader();
+        if(analyticsBeaconUrl != null) {
+            exoPlayerLoader.releaseLoader();
+        }
         progressHandler.removeMessages(SHOW_PROGRESS);
         themedReactContext.removeLifecycleEventListener(this);
         audioBecomingNoisyReceiver.removeListener();
