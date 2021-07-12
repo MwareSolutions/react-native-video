@@ -37,10 +37,11 @@ public class ReactExoplayerViewManager extends ViewGroupManager<ReactExoplayerVi
     private static final String PROP_SRC_ANALYTICS_VIEWERID = "viewer_id";
     private static final String PROP_SRC_ANALYTICS_DEVICE = "device";
     private static final String PROP_SRC_ANALYTICS_BEACONURL = "beacon_url";
+    private static final String PROP_SRC_ANALYTICS_CONTENTNAME = "content_name";
     private static final String PROP_SRC_DRM_TYPE = "type";
     private static final String PROP_SRC_DRM_LICENSESERVER = "licenseServer";
     private static final String PROP_SRC_DRM_HEADERS = "headers";
-     private static final String PROP_SRC_HEADERS = "requestHeaders";
+    private static final String PROP_SRC_HEADERS = "requestHeaders";
     private static final String PROP_RESIZE_MODE = "resizeMode";
     private static final String PROP_REPEAT = "repeat";
     private static final String PROP_SELECTED_AUDIO_TRACK = "selectedAudioTrack";
@@ -106,12 +107,10 @@ public class ReactExoplayerViewManager extends ViewGroupManager<ReactExoplayerVi
 
     @Override
     public @Nullable Map<String, Object> getExportedViewConstants() {
-        return MapBuilder.<String, Object>of(
-                "ScaleNone", Integer.toString(ResizeMode.RESIZE_MODE_FIT),
-                "ScaleAspectFit", Integer.toString(ResizeMode.RESIZE_MODE_FIT),
-                "ScaleToFill", Integer.toString(ResizeMode.RESIZE_MODE_FILL),
-                "ScaleAspectFill", Integer.toString(ResizeMode.RESIZE_MODE_CENTER_CROP)
-        );
+        return MapBuilder.<String, Object>of("ScaleNone", Integer.toString(ResizeMode.RESIZE_MODE_FIT),
+                "ScaleAspectFit", Integer.toString(ResizeMode.RESIZE_MODE_FIT), "ScaleToFill",
+                Integer.toString(ResizeMode.RESIZE_MODE_FILL), "ScaleAspectFill",
+                Integer.toString(ResizeMode.RESIZE_MODE_CENTER_CROP));
     }
 
     @ReactProp(name = PROP_SRC)
@@ -139,7 +138,9 @@ public class ReactExoplayerViewManager extends ViewGroupManager<ReactExoplayerVi
                 videoView.setSrc(srcUri, extension, headers);
                 if (drm != null && drm.hasKey(PROP_SRC_DRM_TYPE)) {
                     String drmType = drm.hasKey(PROP_SRC_DRM_TYPE) ? drm.getString(PROP_SRC_DRM_TYPE) : null;
-                    String drmLicenseServer = drm.hasKey(PROP_SRC_DRM_LICENSESERVER) ? drm.getString(PROP_SRC_DRM_LICENSESERVER) : null;
+                    String drmLicenseServer = drm.hasKey(PROP_SRC_DRM_LICENSESERVER)
+                            ? drm.getString(PROP_SRC_DRM_LICENSESERVER)
+                            : null;
                     ReadableMap drmHeaders = drm.hasKey(PROP_SRC_DRM_HEADERS) ? drm.getMap(PROP_SRC_DRM_HEADERS) : null;
                     if (drmType != null && drmLicenseServer != null && Util.getDrmUuid(drmType) != null) {
                         Log.d("setDrmType", drmType);
@@ -156,29 +157,30 @@ public class ReactExoplayerViewManager extends ViewGroupManager<ReactExoplayerVi
                             }
                             videoView.setDrmLicenseHeader(drmKeyRequestPropertiesList.toArray(new String[0]));
                         }
-                       // Log.d("Disabling TextureView (needed for DRM)");
+                        // Log.d("Disabling TextureView (needed for DRM)");
                         videoView.setUseTextureView(false);
                     }
                 }
                 if (analytics != null) {
-                    String viewerId = analytics.hasKey(PROP_SRC_ANALYTICS_VIEWERID) ? analytics.getString(PROP_SRC_ANALYTICS_VIEWERID) : null;
-                    String device = analytics.hasKey(PROP_SRC_ANALYTICS_DEVICE) ? analytics.getString(PROP_SRC_ANALYTICS_DEVICE) : null;
-                    String beaconUrl = analytics.hasKey(PROP_SRC_ANALYTICS_BEACONURL) ? analytics.getString(PROP_SRC_ANALYTICS_BEACONURL) : null;
-                    videoView.setAnalytics(viewerId, device, beaconUrl);
+                    String viewerId = analytics.hasKey(PROP_SRC_ANALYTICS_VIEWERID)
+                            ? analytics.getString(PROP_SRC_ANALYTICS_VIEWERID)
+                            : null;
+                    String device = analytics.hasKey(PROP_SRC_ANALYTICS_DEVICE)
+                            ? analytics.getString(PROP_SRC_ANALYTICS_DEVICE)
+                            : null;
+                    String beaconUrl = analytics.hasKey(PROP_SRC_ANALYTICS_BEACONURL)
+                            ? analytics.getString(PROP_SRC_ANALYTICS_BEACONURL)
+                            : null;
+                    String contentName = analytics.hasKey(PROP_SRC_ANALYTICS_CONTENTNAME)
+                            ? analytics.getString(PROP_SRC_ANALYTICS_CONTENTNAME)
+                            : null;
+                    videoView.setAnalytics(viewerId, device, beaconUrl, extension, contentName);
                 }
             }
         } else {
-            int identifier = context.getResources().getIdentifier(
-                uriString,
-                "drawable",
-                context.getPackageName()
-            );
+            int identifier = context.getResources().getIdentifier(uriString, "drawable", context.getPackageName());
             if (identifier == 0) {
-                identifier = context.getResources().getIdentifier(
-                    uriString,
-                    "raw",
-                    context.getPackageName()
-                );
+                identifier = context.getResources().getIdentifier(uriString, "raw", context.getPackageName());
             }
             if (identifier > 0) {
                 Uri srcUri = RawResourceDataSource.buildRawResourceUri(identifier);
@@ -188,7 +190,6 @@ public class ReactExoplayerViewManager extends ViewGroupManager<ReactExoplayerVi
             }
         }
     }
-
 
     @ReactProp(name = PROP_RESIZE_MODE)
     public void setResizeMode(final ReactExoplayerView videoView, final String resizeModeOrdinalString) {
@@ -201,50 +202,52 @@ public class ReactExoplayerViewManager extends ViewGroupManager<ReactExoplayerVi
     }
 
     @ReactProp(name = PROP_SELECTED_VIDEO_TRACK)
-    public void setSelectedVideoTrack(final ReactExoplayerView videoView,
-                                     @Nullable ReadableMap selectedVideoTrack) {
+    public void setSelectedVideoTrack(final ReactExoplayerView videoView, @Nullable ReadableMap selectedVideoTrack) {
         String typeString = null;
         Dynamic value = null;
         if (selectedVideoTrack != null) {
             typeString = selectedVideoTrack.hasKey(PROP_SELECTED_VIDEO_TRACK_TYPE)
-                    ? selectedVideoTrack.getString(PROP_SELECTED_VIDEO_TRACK_TYPE) : null;
+                    ? selectedVideoTrack.getString(PROP_SELECTED_VIDEO_TRACK_TYPE)
+                    : null;
             value = selectedVideoTrack.hasKey(PROP_SELECTED_VIDEO_TRACK_VALUE)
-                    ? selectedVideoTrack.getDynamic(PROP_SELECTED_VIDEO_TRACK_VALUE) : null;
+                    ? selectedVideoTrack.getDynamic(PROP_SELECTED_VIDEO_TRACK_VALUE)
+                    : null;
         }
         videoView.setSelectedVideoTrack(typeString, value);
     }
 
     @ReactProp(name = PROP_SELECTED_AUDIO_TRACK)
-    public void setSelectedAudioTrack(final ReactExoplayerView videoView,
-                                     @Nullable ReadableMap selectedAudioTrack) {
+    public void setSelectedAudioTrack(final ReactExoplayerView videoView, @Nullable ReadableMap selectedAudioTrack) {
         String typeString = null;
         Dynamic value = null;
         if (selectedAudioTrack != null) {
             typeString = selectedAudioTrack.hasKey(PROP_SELECTED_AUDIO_TRACK_TYPE)
-                    ? selectedAudioTrack.getString(PROP_SELECTED_AUDIO_TRACK_TYPE) : null;
+                    ? selectedAudioTrack.getString(PROP_SELECTED_AUDIO_TRACK_TYPE)
+                    : null;
             value = selectedAudioTrack.hasKey(PROP_SELECTED_AUDIO_TRACK_VALUE)
-                    ? selectedAudioTrack.getDynamic(PROP_SELECTED_AUDIO_TRACK_VALUE) : null;
+                    ? selectedAudioTrack.getDynamic(PROP_SELECTED_AUDIO_TRACK_VALUE)
+                    : null;
         }
         videoView.setSelectedAudioTrack(typeString, value);
     }
 
     @ReactProp(name = PROP_SELECTED_TEXT_TRACK)
-    public void setSelectedTextTrack(final ReactExoplayerView videoView,
-                                     @Nullable ReadableMap selectedTextTrack) {
+    public void setSelectedTextTrack(final ReactExoplayerView videoView, @Nullable ReadableMap selectedTextTrack) {
         String typeString = null;
         Dynamic value = null;
         if (selectedTextTrack != null) {
             typeString = selectedTextTrack.hasKey(PROP_SELECTED_TEXT_TRACK_TYPE)
-                    ? selectedTextTrack.getString(PROP_SELECTED_TEXT_TRACK_TYPE) : null;
+                    ? selectedTextTrack.getString(PROP_SELECTED_TEXT_TRACK_TYPE)
+                    : null;
             value = selectedTextTrack.hasKey(PROP_SELECTED_TEXT_TRACK_VALUE)
-                    ? selectedTextTrack.getDynamic(PROP_SELECTED_TEXT_TRACK_VALUE) : null;
+                    ? selectedTextTrack.getDynamic(PROP_SELECTED_TEXT_TRACK_VALUE)
+                    : null;
         }
         videoView.setSelectedTextTrack(typeString, value);
     }
 
     @ReactProp(name = PROP_TEXT_TRACKS)
-    public void setPropTextTracks(final ReactExoplayerView videoView,
-                                  @Nullable ReadableArray textTracks) {
+    public void setPropTextTracks(final ReactExoplayerView videoView, @Nullable ReadableArray textTracks) {
         videoView.setTextTracks(textTracks);
     }
 
@@ -331,24 +334,26 @@ public class ReactExoplayerViewManager extends ViewGroupManager<ReactExoplayerVi
         int bufferForPlaybackAfterRebufferMs = DefaultLoadControl.DEFAULT_BUFFER_FOR_PLAYBACK_AFTER_REBUFFER_MS;
         if (bufferConfig != null) {
             minBufferMs = bufferConfig.hasKey(PROP_BUFFER_CONFIG_MIN_BUFFER_MS)
-                    ? bufferConfig.getInt(PROP_BUFFER_CONFIG_MIN_BUFFER_MS) : minBufferMs;
+                    ? bufferConfig.getInt(PROP_BUFFER_CONFIG_MIN_BUFFER_MS)
+                    : minBufferMs;
             maxBufferMs = bufferConfig.hasKey(PROP_BUFFER_CONFIG_MAX_BUFFER_MS)
-                    ? bufferConfig.getInt(PROP_BUFFER_CONFIG_MAX_BUFFER_MS) : maxBufferMs;
+                    ? bufferConfig.getInt(PROP_BUFFER_CONFIG_MAX_BUFFER_MS)
+                    : maxBufferMs;
             bufferForPlaybackMs = bufferConfig.hasKey(PROP_BUFFER_CONFIG_BUFFER_FOR_PLAYBACK_MS)
-                    ? bufferConfig.getInt(PROP_BUFFER_CONFIG_BUFFER_FOR_PLAYBACK_MS) : bufferForPlaybackMs;
-            bufferForPlaybackAfterRebufferMs = bufferConfig.hasKey(PROP_BUFFER_CONFIG_BUFFER_FOR_PLAYBACK_AFTER_REBUFFER_MS)
-                    ? bufferConfig.getInt(PROP_BUFFER_CONFIG_BUFFER_FOR_PLAYBACK_AFTER_REBUFFER_MS) : bufferForPlaybackAfterRebufferMs;
+                    ? bufferConfig.getInt(PROP_BUFFER_CONFIG_BUFFER_FOR_PLAYBACK_MS)
+                    : bufferForPlaybackMs;
+            bufferForPlaybackAfterRebufferMs = bufferConfig
+                    .hasKey(PROP_BUFFER_CONFIG_BUFFER_FOR_PLAYBACK_AFTER_REBUFFER_MS)
+                            ? bufferConfig.getInt(PROP_BUFFER_CONFIG_BUFFER_FOR_PLAYBACK_AFTER_REBUFFER_MS)
+                            : bufferForPlaybackAfterRebufferMs;
             videoView.setBufferConfig(minBufferMs, maxBufferMs, bufferForPlaybackMs, bufferForPlaybackAfterRebufferMs);
         }
     }
 
     private boolean startsWithValidScheme(String uriString) {
-        return uriString.startsWith("http://")
-                || uriString.startsWith("https://")
-                || uriString.startsWith("content://")
-                || uriString.startsWith("file://")
-                || uriString.startsWith("asset://")
-                || uriString.startsWith("udp://"); 
+        return uriString.startsWith("http://") || uriString.startsWith("https://") || uriString.startsWith("content://")
+                || uriString.startsWith("file://") || uriString.startsWith("asset://")
+                || uriString.startsWith("udp://");
     }
 
     private @ResizeMode.Mode int convertToIntDef(String resizeModeOrdinalString) {
@@ -364,7 +369,8 @@ public class ReactExoplayerViewManager extends ViewGroupManager<ReactExoplayerVi
      *
      * @param readableMap The ReadableMap to be conveted.
      * @return A HashMap containing the data that was in the ReadableMap.
-     * @see 'Adapted from https://github.com/artemyarulin/react-native-eval/blob/master/android/src/main/java/com/evaluator/react/ConversionUtil.java'
+     * @see 'Adapted from
+     *      https://github.com/artemyarulin/react-native-eval/blob/master/android/src/main/java/com/evaluator/react/ConversionUtil.java'
      */
     public static Map<String, String> toStringMap(@Nullable ReadableMap readableMap) {
         if (readableMap == null)

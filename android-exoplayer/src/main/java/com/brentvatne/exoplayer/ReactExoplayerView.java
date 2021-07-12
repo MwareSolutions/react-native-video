@@ -177,6 +177,8 @@ class ReactExoplayerView extends FrameLayout implements
     public String analyticsViewerId = null;
     public String analyticsDevice = null;
     public String analyticsBeaconUrl = null;
+    private String contentType;
+    public String contentName;
 
    // \ End props
 
@@ -208,6 +210,7 @@ class ReactExoplayerView extends FrameLayout implements
             }
         }
     };
+
 
     public ReactExoplayerView(ThemedReactContext context, ReactExoplayerConfig config) {
         super(context);
@@ -438,7 +441,9 @@ class ReactExoplayerView extends FrameLayout implements
     private void setUpAkamaiMediaAnalytics(Context context, String streamUrl){
         exoPlayerLoader = new AkamaiExoPlayerLoader(context, this.analyticsBeaconUrl, true);
         exoPlayerLoader.setData("device", this.analyticsDevice);
+        exoPlayerLoader.setData("contentType", this.contentType);
         exoPlayerLoader.setViewerId(this.analyticsViewerId);
+        exoPlayerLoader.setData("title", this.contentName);
         exoPlayerLoader.initializeLoader(player, streamUrl);
     }
 
@@ -709,7 +714,7 @@ class ReactExoplayerView extends FrameLayout implements
             trackSelector = null;
             player = null;
         }
-        if(analyticsBeaconUrl != null) {
+        if(analyticsBeaconUrl != null && exoPlayerLoader != null) {
             exoPlayerLoader.releaseLoader();
         }
         progressHandler.removeMessages(SHOW_PROGRESS);
@@ -1495,13 +1500,12 @@ class ReactExoplayerView extends FrameLayout implements
         this.drmLicenseHeader = header;
     }
 
-    public void setAnalytics(String viewerID, String device, String beaconUrl){
-        Log.d("setAnalytics", viewerID.toString());
-        Log.d("setAnalytics", device.toString());
-        Log.d("setAnalytics", beaconUrl.toString());
+    public void setAnalytics(String viewerID, String device, String beaconUrl, String contentType, String contentName){
         this.analyticsViewerId = viewerID;
         this.analyticsDevice = device;
         this.analyticsBeaconUrl = beaconUrl;
+        this.contentType = contentType;
+        this.contentName = contentName;
     }
 
 
