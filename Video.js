@@ -304,7 +304,7 @@ export default class Video extends Component {
     Object.assign(nativeProps, {
       style: [styles.base, nativeProps.style],
       resizeMode: nativeResizeMode,
-      adTagUrl: this.props.adTagUrl,
+      adTagUrl: this.props.adTagUrl, 
       streamType: this.props.streamType,
       src: {
         uri,
@@ -431,7 +431,8 @@ Video.propTypes = {
       analytics: PropTypes.shape({
         viewer_id: PropTypes.string,
         device: PropTypes.string,
-        beacon_url: PropTypes.string
+        beacon_url: PropTypes.string,
+        content_name: PropTypes.string
       }),
       drm: PropTypes.shape({
         type: PropTypes.oneOf([
