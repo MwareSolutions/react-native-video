@@ -772,14 +772,17 @@ static int const RCTVideoUnset = -1;
 
 - (void)requestAds {
   // Create an ad display container for ad rendering.
-  IMAAdDisplayContainer *adDisplayContainer = [IMAAdDisplayContainer alloc];
+//  IMAAdDisplayContainer *adDisplayContainer =
+//      [[IMAAdDisplayContainer alloc] initWithAdContainer:self companionSlots:nil];
+//  // Create an ad request with our ad tag, display container, and optional user context.
+//  IMAAdsRequest *request = [[IMAAdsRequest alloc] initWithAdTagUrl:_adTagUrl
+//                                                adDisplayContainer:adDisplayContainer
+//                                                   contentPlayhead:self.contentPlayhead
+//                                                       userContext:nil];
+//  [self.adsLoader requestAdsWithRequest:request];
     
-  // Create an ad request with our ad tag, display container, and optional user context.
-  IMAAdsRequest *request = [[IMAAdsRequest alloc] initWithAdTagUrl:_adTagUrl
-                                                adDisplayContainer:adDisplayContainer
-                                                   contentPlayhead:self.contentPlayhead
-                                                       userContext:nil];
-  [self.adsLoader requestAdsWithRequest:request];
+
+
 }
 
 #pragma mark AdsLoader Delegates
@@ -793,7 +796,7 @@ static int const RCTVideoUnset = -1;
 
   // Create ads rendering settings and tell the SDK to use the in-app browser.
   IMAAdsRenderingSettings *adsRenderingSettings = [[IMAAdsRenderingSettings alloc] init];
-  adsRenderingSettings.linkOpenerPresentingController = _playerViewController;
+    adsRenderingSettings.linkOpenerPresentingController = _playerViewController;
 
   // Initialize the ads manager.
   [self.adsManager initializeWithAdsRenderingSettings:adsRenderingSettings];
