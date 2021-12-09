@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/sanderkerstens/Downloads/Development/APPS_RN/mware.rn.tvapp/node_modules/react-native-video/android-exoplayer/build/intermediates/res/merged/release/values-v21/values-v21.xml",
+            "outputFile": "/Users/sanderkerstens/Downloads/Development/APPS_RN/mware.rn.tvapp.64/node_modules/react-native-video/android-exoplayer/build/intermediates/res/merged/release/values-v21/values-v21.xml",
             "map": [
                 {
                     "source": "/Users/sanderkerstens/.gradle/caches/transforms-2/files-2.1/08a7a6ceb988068c2469109e08b9deae/res/values-v21/values-v21.xml",
@@ -63,7 +63,7 @@
             ]
         },
         {
-            "outputFile": "/Users/sanderkerstens/Downloads/Development/APPS_RN/mware.rn.tvapp/node_modules/react-native-video/android-exoplayer/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-v21/values-v21.xml",
+            "outputFile": "/Users/sanderkerstens/Downloads/Development/APPS_RN/mware.rn.tvapp.64/node_modules/react-native-video/android-exoplayer/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-v21/values-v21.xml",
             "map": [
                 {
                     "source": "/Users/sanderkerstens/.gradle/caches/transforms-2/files-2.1/08a7a6ceb988068c2469109e08b9deae/res/values-v21/values-v21.xml",

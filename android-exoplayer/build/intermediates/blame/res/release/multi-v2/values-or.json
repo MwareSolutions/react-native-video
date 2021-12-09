@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/sanderkerstens/Downloads/Development/APPS_RN/mware.rn.tvapp/node_modules/react-native-video/android-exoplayer/build/intermediates/res/merged/release/values-or/values-or.xml",
+            "outputFile": "/Users/sanderkerstens/Downloads/Development/APPS_RN/mware.rn.tvapp.64/node_modules/react-native-video/android-exoplayer/build/intermediates/res/merged/release/values-or/values-or.xml",
             "map": [
                 {
                     "source": "/Users/sanderkerstens/.gradle/caches/transforms-2/files-2.1/35800e3bd1ce62a2a4925b3acc5ed907/res/values-or/values-or.xml",
@@ -38,7 +38,7 @@
                     }
                 },
                 {
-                    "source": "/Users/sanderkerstens/.gradle/caches/transforms-2/files-2.1/c56b6e04ca28c50b31e011048a2bb563/res/values-or/values.xml",
+                    "source": "/Users/sanderkerstens/.gradle/caches/transforms-2/files-2.1/987e9ad2f028342e3d78e09c857ceee7/res/values-or/values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",
@@ -57,7 +57,7 @@
             ]
         },
         {
-            "outputFile": "/Users/sanderkerstens/Downloads/Development/APPS_RN/mware.rn.tvapp/node_modules/react-native-video/android-exoplayer/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-or/values-or.xml",
+            "outputFile": "/Users/sanderkerstens/Downloads/Development/APPS_RN/mware.rn.tvapp.64/node_modules/react-native-video/android-exoplayer/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-or/values-or.xml",
             "map": [
                 {
                     "source": "/Users/sanderkerstens/.gradle/caches/transforms-2/files-2.1/35800e3bd1ce62a2a4925b3acc5ed907/res/values-or/values-or.xml",
@@ -94,7 +94,7 @@
                     }
                 },
                 {
-                    "source": "/Users/sanderkerstens/.gradle/caches/transforms-2/files-2.1/c56b6e04ca28c50b31e011048a2bb563/res/values-or/values.xml",
+                    "source": "/Users/sanderkerstens/.gradle/caches/transforms-2/files-2.1/987e9ad2f028342e3d78e09c857ceee7/res/values-or/values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "0",

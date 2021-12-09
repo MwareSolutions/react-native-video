@@ -1,25 +1,8 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/sanderkerstens/Downloads/Development/APPS_RN/mware.rn.tvapp/node_modules/react-native-video/android-exoplayer/build/intermediates/res/merged/release/values-et/values-et.xml",
+            "outputFile": "/Users/sanderkerstens/Downloads/Development/APPS_RN/mware.rn.tvapp.64/node_modules/react-native-video/android-exoplayer/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-et/values-et.xml",
             "map": [
-                {
-                    "source": "/Users/sanderkerstens/.gradle/caches/transforms-2/files-2.1/c56b6e04ca28c50b31e011048a2bb563/res/values-et/values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "247",
-                        "endColumns": "198",
-                        "endOffsets": "445"
-                    },
-                    "to": {
-                        "startLines": "29",
-                        "startColumns": "4",
-                        "startOffsets": "2860",
-                        "endColumns": "198",
-                        "endOffsets": "3054"
-                    }
-                },
                 {
                     "source": "/Users/sanderkerstens/.gradle/caches/transforms-2/files-2.1/35800e3bd1ce62a2a4925b3acc5ed907/res/values-et/values-et.xml",
                     "from": {
@@ -38,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "/Users/sanderkerstens/Downloads/Development/APPS_RN/mware.rn.tvapp/platformBuilds/blank_android/exo2/library/ui/build/intermediates/packaged_res/release/values-et/values-et.xml",
+                    "source": "/Users/sanderkerstens/Downloads/Development/APPS_RN/mware.rn.tvapp.64/platformBuilds/blank_android/exo2/library/ui/build/intermediates/packaged_res/release/values-et/values-et.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -69,30 +52,30 @@
                         "startOffsets": "105,222,329,440,526,628,745,825,903,995,1089,1194,1296,1406,1500,1601,1695,1787,1880,1963,2074,2179,2278,2388,2489,2592,2758,5589",
                         "endColumns": "116,106,110,85,101,116,79,77,91,93,104,101,109,93,100,93,91,92,82,110,104,98,109,100,102,165,101,81",
                         "endOffsets": "217,324,435,521,623,740,820,898,990,1084,1189,1291,1401,1495,1596,1690,1782,1875,1958,2069,2174,2273,2383,2484,2587,2753,2855,5666"
+                    }
+                },
+                {
+                    "source": "/Users/sanderkerstens/.gradle/caches/transforms-2/files-2.1/987e9ad2f028342e3d78e09c857ceee7/res/values-et/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "247",
+                        "endColumns": "198",
+                        "endOffsets": "445"
+                    },
+                    "to": {
+                        "startLines": "29",
+                        "startColumns": "4",
+                        "startOffsets": "2860",
+                        "endColumns": "198",
+                        "endOffsets": "3054"
                     }
                 }
             ]
         },
         {
-            "outputFile": "/Users/sanderkerstens/Downloads/Development/APPS_RN/mware.rn.tvapp/node_modules/react-native-video/android-exoplayer/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-et/values-et.xml",
+            "outputFile": "/Users/sanderkerstens/Downloads/Development/APPS_RN/mware.rn.tvapp.64/node_modules/react-native-video/android-exoplayer/build/intermediates/res/merged/release/values-et/values-et.xml",
             "map": [
-                {
-                    "source": "/Users/sanderkerstens/.gradle/caches/transforms-2/files-2.1/c56b6e04ca28c50b31e011048a2bb563/res/values-et/values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "247",
-                        "endColumns": "198",
-                        "endOffsets": "445"
-                    },
-                    "to": {
-                        "startLines": "29",
-                        "startColumns": "4",
-                        "startOffsets": "2860",
-                        "endColumns": "198",
-                        "endOffsets": "3054"
-                    }
-                },
                 {
                     "source": "/Users/sanderkerstens/.gradle/caches/transforms-2/files-2.1/35800e3bd1ce62a2a4925b3acc5ed907/res/values-et/values-et.xml",
                     "from": {
@@ -111,7 +94,7 @@
                     }
                 },
                 {
-                    "source": "/Users/sanderkerstens/Downloads/Development/APPS_RN/mware.rn.tvapp/platformBuilds/blank_android/exo2/library/ui/build/intermediates/packaged_res/release/values-et/values-et.xml",
+                    "source": "/Users/sanderkerstens/Downloads/Development/APPS_RN/mware.rn.tvapp.64/platformBuilds/blank_android/exo2/library/ui/build/intermediates/packaged_res/release/values-et/values-et.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -142,6 +125,23 @@
                         "startOffsets": "105,222,329,440,526,628,745,825,903,995,1089,1194,1296,1406,1500,1601,1695,1787,1880,1963,2074,2179,2278,2388,2489,2592,2758,5589",
                         "endColumns": "116,106,110,85,101,116,79,77,91,93,104,101,109,93,100,93,91,92,82,110,104,98,109,100,102,165,101,81",
                         "endOffsets": "217,324,435,521,623,740,820,898,990,1084,1189,1291,1401,1495,1596,1690,1782,1875,1958,2069,2174,2273,2383,2484,2587,2753,2855,5666"
+                    }
+                },
+                {
+                    "source": "/Users/sanderkerstens/.gradle/caches/transforms-2/files-2.1/987e9ad2f028342e3d78e09c857ceee7/res/values-et/values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "247",
+                        "endColumns": "198",
+                        "endOffsets": "445"
+                    },
+                    "to": {
+                        "startLines": "29",
+                        "startColumns": "4",
+                        "startOffsets": "2860",
+                        "endColumns": "198",
+                        "endOffsets": "3054"
                     }
                 }
             ]

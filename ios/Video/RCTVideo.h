@@ -5,9 +5,6 @@
 #import "RCTVideoPlayerViewControllerDelegate.h"
 #import <React/RCTComponent.h>
 #import <React/RCTBridgeModule.h>
-#if !TARGET_OS_TV
-@import GoogleInteractiveMediaAds;
-#endif
 
 #if __has_include(<react-native-video/RCTVideoCache.h>)
 #import <react-native-video/RCTVideoCache.h>
@@ -17,11 +14,11 @@
 
 @class RCTEventDispatcher;
 #if __has_include(<react-native-video/RCTVideoCache.h>)
-@interface RCTVideo : UIView <RCTVideoPlayerViewControllerDelegate, DVAssetLoaderDelegatesDelegate, IMAAdsLoaderDelegate, IMAAdsManagerDelegate>
+@interface RCTVideo : UIView <RCTVideoPlayerViewControllerDelegate, DVAssetLoaderDelegatesDelegate, AVAssetResourceLoaderDelegate>
 #elif TARGET_OS_TV
-@interface RCTVideo : UIView <RCTVideoPlayerViewControllerDelegate>
+@interface RCTVideo : UIView <RCTVideoPlayerViewControllerDelegate, AVAssetResourceLoaderDelegate>
 #else
-@interface RCTVideo : UIView <RCTVideoPlayerViewControllerDelegate, AVPictureInPictureControllerDelegate, IMAAdsLoaderDelegate, IMAAdsManagerDelegate>
+@interface RCTVideo : UIView <RCTVideoPlayerViewControllerDelegate, AVPictureInPictureControllerDelegate, AVAssetResourceLoaderDelegate>
 #endif
 
 @property (nonatomic, copy) RCTDirectEventBlock onVideoLoadStart;
@@ -59,19 +56,12 @@ typedef NS_ENUM(NSInteger, RCTVideoError) {
     RCTVideoErrorNoDRMData
 };
 
-#if !TARGET_OS_TV
-/// Playhead used by the SDK to track content video progress and insert mid-rolls.
-@property(nonatomic, strong) IMAAVPlayerContentPlayhead *contentPlayhead;
-/// Entry point for the SDK. Used to make ad requests.
-@property(nonatomic, strong) IMAAdsLoader *adsLoader;
-/// Main point of interaction with the SDK. Created by the SDK as the result of an ad request.
-@property(nonatomic, strong) IMAAdsManager *adsManager;
-#endif
-
 - (instancetype)initWithEventDispatcher:(RCTEventDispatcher *)eventDispatcher NS_DESIGNATED_INITIALIZER;
 
 - (AVPlayerViewController*)createPlayerViewController:(AVPlayer*)player withPlayerItem:(AVPlayerItem*)playerItem;
 
 - (void)save:(NSDictionary *)options resolve:(RCTPromiseResolveBlock)resolve reject:(RCTPromiseRejectBlock)reject;
+- (void)setLicenseResult:(NSString * )license;
+- (BOOL)setLicenseResultError:(NSString * )error;
 
 @end

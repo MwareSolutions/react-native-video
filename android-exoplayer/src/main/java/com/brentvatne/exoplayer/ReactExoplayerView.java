@@ -474,6 +474,7 @@ class ReactExoplayerView extends FrameLayout implements
                     DrmSessionManager<FrameworkMediaCrypto> drmSessionManager = null;
                     if (drmUUID != null) {
                         try {
+
                             drmSessionManager = buildDrmSessionManager(drmUUID, drmLicenseUrl, drmLicenseHeader);
                         } catch (UnsupportedDrmException e) {
                             int errorStringId = Util.SDK_INT < 18 ? R.string.error_drm_not_supported
@@ -483,6 +484,7 @@ class ReactExoplayerView extends FrameLayout implements
                             return;
                         }
                     }
+
                     DefaultRenderersFactory renderersFactory = new DefaultRenderersFactory(getContext(), drmSessionManager, DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER);
 
                     //DefaultRenderersFactory renderersFactory = new DefaultRenderersFactory(getContext()).setExtensionRendererMode(drmSessionManager, DefaultRenderersFactory.EXTENSION_RENDERER_MODE_OFF);
@@ -615,22 +617,6 @@ class ReactExoplayerView extends FrameLayout implements
 
         return new DefaultDrmSessionManager<>(uuid, FrameworkMediaDrm.newInstance(uuid), drmCallback, null, false);
     }
-
-
-//    private DrmSessionManager<FrameworkMediaCrypto> buildDrmSessionManager(UUID uuid, String licenseUrl, String[] keyRequestPropertiesArray) throws UnsupportedDrmException {
-//        if (Util.SDK_INT < 18) {
-//            return null;
-//        }
-//        HttpMediaDrmCallback drmCallback = new HttpMediaDrmCallback(licenseUrl,
-//                buildHttpDataSourceFactory(false));
-//        if (keyRequestPropertiesArray != null) {
-//            for (int i = 0; i < keyRequestPropertiesArray.length - 1; i += 2) {
-//                drmCallback.setKeyRequestProperty(keyRequestPropertiesArray[i],
-//                        keyRequestPropertiesArray[i + 1]);
-//            }
-//        }
-//        return new DefaultDrmSessionManager<T>(uuid, FrameworkMediaDrm.newInstance(uuid), drmCallback, null, null, this);
-//    }
 
     /**
      * Returns a new HttpDataSource factory.
