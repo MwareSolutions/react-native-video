@@ -4,7 +4,7 @@ import { PropTypes } from 'prop-types';
 import DRMType from '../DRMType';
 type NormalProps = {
   /* Native only */
-  adTagUrl: ?string,
+  vast: ?string,
   streamType: ?string,
   source: Object,
   seek?: ?number,
@@ -324,7 +324,7 @@ class Video extends Component<Props> {
       id:source.ref,
       onLoadStart: this._onLoadStart,
       onLoadedData: this._onLoad,
-      onLoad: initVideoJS(source.uri, source.type, source.drm.headers, source.drm.licenseServer, source.ref, this.props.adTagUrl, this.props.streamType),
+      onLoad: initVideoJS(source.uri, source.type, source.drm.headers, source.drm.licenseServer, source.ref, this.props.vast, this.props.streamType),
       onError: this._onError,
       onProgress: this._onProgress,
       onSeeking: this._onSeek,
@@ -380,7 +380,8 @@ Video.propTypes = {
   playerup: PropTypes.func,
   playerdown: PropTypes.func,
   playerback: PropTypes.func,
-  adTagUrl: PropTypes.string,
+  vast: PropTypes.string,
+  externalSubtitleUrl: PropTypes.string,
   streamType: PropTypes.string,
   // source: PropTypes.oneOfType([
   //   PropTypes.shape({
