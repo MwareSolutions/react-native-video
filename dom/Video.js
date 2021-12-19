@@ -2,6 +2,8 @@ import { Component } from 'react';
 import { ViewPropTypes, createElement } from 'react-native';
 import { PropTypes } from 'prop-types';
 import DRMType from '../DRMType';
+import TextTrackType from '../TextTrackType';
+
 type NormalProps = {
   /* Native only */
   vast: ?string,
@@ -324,7 +326,7 @@ class Video extends Component<Props> {
       id:source.ref,
       onLoadStart: this._onLoadStart,
       onLoadedData: this._onLoad,
-      onLoad: initVideoJS(source.uri, source.type, source.drm.headers, source.drm.licenseServer, source.ref, this.props.vast, this.props.streamType),
+      onLoad: initVideoJS(source.uri, source.type, source.drm,  source.ref, this.props.vast, this.props.streamType, this.props.textTracks),
       onError: this._onError,
       onProgress: this._onProgress,
       onSeeking: this._onSeek,
@@ -381,19 +383,7 @@ Video.propTypes = {
   playerdown: PropTypes.func,
   playerback: PropTypes.func,
   vast: PropTypes.string,
-  externalSubtitleUrl: PropTypes.string,
   streamType: PropTypes.string,
-  // source: PropTypes.oneOfType([
-  //   PropTypes.shape({
-  //     uri: PropTypes.string,
-  //     type: PropTypes.string,
-  //     drmUrl: PropTypes.string,
-  //     drmServerUrl: PropTypes.string,
-  //     ref: PropTypes.string,
-  //     drm: source.drm
-  //   }),
-  //   PropTypes.number,
-  // ]),
   source: PropTypes.oneOfType([
     PropTypes.shape({
       uri: PropTypes.string,
@@ -402,12 +392,38 @@ Video.propTypes = {
           DRMType.CLEARKEY, DRMType.FAIRPLAY, DRMType.WIDEVINE, DRMType.PLAYREADY
         ]),
         licenseServer: PropTypes.string,
-        headers: PropTypes.shape({})
-      })
+        headers: PropTypes.shape({}),
+        base64Certificate: PropTypes.bool,
+        certificateUrl: PropTypes.string,
+        getLicense: PropTypes.func,
+        supplier: PropTypes.string
+      }),
     }),
-    // Opaque type returned by require('./video.mp4')
+
     PropTypes.number,
   ]),
+  drm: PropTypes.shape({
+    type: PropTypes.oneOf([
+      DRMType.CLEARKEY, DRMType.FAIRPLAY, DRMType.WIDEVINE, DRMType.PLAYREADY
+    ]),
+    licenseServer: PropTypes.string,
+    headers: PropTypes.shape({}),
+    base64Certificate: PropTypes.bool,
+    certificateUrl: PropTypes.string,
+    getLicense: PropTypes.func,
+  }),
+  textTracks: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string,
+      uri: PropTypes.string.isRequired,
+      type: PropTypes.oneOf([
+        TextTrackType.SRT,
+        TextTrackType.TTML,
+        TextTrackType.VTT,
+      ]),
+      language: PropTypes.string.isRequired,
+    })
+  ),
   resizeMode: PropTypes.string,
   poster: PropTypes.string,
   repeat: PropTypes.bool,
