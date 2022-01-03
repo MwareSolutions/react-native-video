@@ -307,7 +307,7 @@ export default class Video extends Component {
         drm: source.drm,
         analytics: source.analytics,
         vast: source.vast,
-        externalSubtitleUrl: this.props.externalSubtitleUrl
+        //externalSubtitles: this.props.externalSubtitleUrl
       },
       onVideoLoadStart: this._onLoadStart,
       onVideoLoad: this._onLoad,
@@ -417,7 +417,6 @@ Video.propTypes = {
     getLicense: PropTypes.func,
   }),
   vast: PropTypes.string,
-  externalSubtitleUrl: PropTypes.string,
   minLoadRetryCount: PropTypes.number,
   maxBitRate: PropTypes.number,
   resizeMode: PropTypes.string,

@@ -1,13 +1,13 @@
 // @flow
 
-import { RCTViewManager } from "react-native-dom";
+import { ViewManager } from "react-native";
 
 import RCTVideo from "./RCTVideo";
 import resizeModes from "./resizeModes";
 
 import type { VideoSource } from "./types";
 
-class RCTVideoManager extends RCTViewManager {
+class RCTVideoManager extends ViewManager {
   static moduleName = "RCTVideoManager";
 
   view() {

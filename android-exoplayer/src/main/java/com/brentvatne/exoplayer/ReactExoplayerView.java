@@ -88,11 +88,15 @@ import com.google.android.exoplayer2.util.TimestampAdjuster;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.util.MimeTypes;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
@@ -170,7 +174,7 @@ class ReactExoplayerView extends FrameLayout implements
     private Map<String, String> requestHeaders;
     private boolean mReportBandwidth = false;
     private Uri vast;
-    private Uri externalSubtitleUrl;
+    private Map<String, String> externalSubtitles;
     private boolean controls;
     public UUID drmUUID = null;
     public String drmLicenseUrl = null;
@@ -602,19 +606,7 @@ class ReactExoplayerView extends FrameLayout implements
                             if (haveResumePosition) {
                                 player.seekTo(resumeWindow, resumePosition);
                             }
-
-                             if (externalSubtitleUrl != null) {
-                                 Format textFormat = Format.createTextSampleFormat(null, MimeTypes.TEXT_VTT,
-                                         null, Format.NO_VALUE, 0, "en", null, 0);
-                                 Uri uri = externalSubtitleUrl;
-                                 MediaSource subtitleSource = new SingleSampleMediaSource(uri, mediaDataSourceFactory,
-                                         textFormat, C.TIME_UNSET);
-                                 // Plays the video with the sideloaded subtitle.
-                                 MergingMediaSource mergedSource = new MergingMediaSource(mediaSource, subtitleSource);
-                                 player.prepare(mergedSource, !haveResumePosition, false);
-                             } else {
-                                 player.prepare(mediaSource, !haveResumePosition, false);
-                             }
+                            player.prepare(mediaSource, !haveResumePosition, false);
                             playerNeedsSource = false;
                         }
                         eventEmitter.loadStart();
@@ -633,8 +625,8 @@ class ReactExoplayerView extends FrameLayout implements
     public void setVastUrl(final Uri uri) {
         vast = uri;
     }
-    public void setExternalSubtitleUrl(final Uri uri){
-        externalSubtitleUrl = uri;
+    public void setExternalSubtitles(final Map<String, String> externalSubtitles_){
+        externalSubtitles = externalSubtitles_;
     }
 
     private DrmSessionManager<FrameworkMediaCrypto> buildDrmSessionManager(UUID uuid, String licenseUrl,
