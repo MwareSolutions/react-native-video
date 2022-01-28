@@ -312,6 +312,7 @@ class Video extends Component<Props> {
       id: source.ref,
       crossorigin: "anonymous",
       autoplay: 'true',
+      playsinline: 'true',
       onLoadStart: this._onLoadStart,
       onLoadedData: this._onLoad,
       onLoad: initVideoJS(source.uri, source.drm, source.ref, this.props.textTracks, this.props.streamType),

@@ -1,13 +1,13 @@
 // @flow
-import {View} from 'react-native';
 
+import { RCTEvent, RCTView, type RCTBridge } from "react-native-dom";
 import shaka from "shaka-player";
 
 import resizeModes from "./resizeModes";
-import { VideoSource } from "./types";
+import type { VideoSource } from "./types";
 import RCTVideoEvent from "./RCTVideoEvent";
 
-class RCTVideo extends View {
+class RCTVideo extends RCTView {
   playPromise: Promise<void> = Promise.resolve();
   progressTimer: number;
   videoElement: HTMLVideoElement;
@@ -22,11 +22,11 @@ class RCTVideo extends View {
   _savedVolume: number = 1.0;
 
   constructor(bridge: RCTBridge) {
-    //super(bridge);
+    super(bridge);
 
     this.eventDispatcher = bridge.getModuleByName("EventDispatcher");
 
-    //shaka.polyfill.installAll();
+    shaka.polyfill.installAll();
 
     this.onEnd = this.onEnd.bind(this);
     this.onLoad = this.onLoad.bind(this);

@@ -1,56 +1,56 @@
 // import { RCTEvent } from "react-native-dom";
 
 interface RCTEvent {
+    viewTag: number;
+    eventName: string;
+    coalescingKey: number;
+  
+    canCoalesce(): boolean;
+    coalesceWithEvent(event: RCTEvent): RCTEvent;
+  
+    moduleDotMethod(): string;
+    arguments(): Array<any>;
+  }
+
+export default class RCTVideoEvent implements RCTEvent {
   viewTag: number;
   eventName: string;
   coalescingKey: number;
 
-  canCoalesce(): boolean;
-  coalesceWithEvent(event: RCTEvent): RCTEvent;
+  constructor(
+    eventName: string,
+    reactTag: number,
+    coalescingKey: number,
+    data: ?Object
+  ) {
+    this.viewTag = reactTag;
+    this.eventName = eventName;
+    this.coalescingKey = coalescingKey;
+    this.data = data;
+  }
 
-  moduleDotMethod(): string;
-  arguments(): Array<any>;
-}
+  canCoalesce(): boolean {
+    return false;
+  }
 
-export default class RCTVideoEvent implements RCTEvent {
-viewTag: number;
-eventName: string;
-coalescingKey: number;
+  coalesceWithEvent(event: RCTEvent): RCTEvent {
+    return;
+  }
 
-constructor(
-  eventName: string,
-  reactTag: number,
-  coalescingKey: number,
-  data: ?Object
-) {
-  this.viewTag = reactTag;
-  this.eventName = eventName;
-  this.coalescingKey = coalescingKey;
-  this.data = data;
-}
+  moduleDotMethod(): string {
+    return "RCTEventEmitter.receiveEvent";
+  }
 
-canCoalesce(): boolean {
-  return false;
-}
+  arguments(): Array<any> {
+    const args = [
+      this.viewTag,
+      this.eventName,
+      this.data
+    ];
+    return args;
+  }
 
-coalesceWithEvent(event: RCTEvent): RCTEvent {
-  return;
-}
-
-moduleDotMethod(): string {
-  return "RCTEventEmitter.receiveEvent";
-}
-
-arguments(): Array<any> {
-  const args = [
-    this.viewTag,
-    this.eventName,
-    this.data
-  ];
-  return args;
-}
-
-coalescingKey(): number {
-  return this.coalescingKey;
-}
+  coalescingKey(): number {
+    return this.coalescingKey;
+  }
 }
