@@ -31,8 +31,7 @@ public class ReactExoplayerViewManager extends ViewGroupManager<ReactExoplayerVi
     private static final String PROP_SRC = "src";
     private static final String PROP_SRC_URI = "uri";
     private static final String PROP_SRC_TYPE = "type";
-    private static final String PROP_SRC_VAST = "vast";
-    //private static final String PROP_SRC_EXTERNAL_SUBTITLES = "externalSubtitles";
+    private static final String PROP_SRC_AD_TAG_URL = "adTagUrl";
     private static final String PROP_SRC_DRM = "drm";
     private static final String PROP_SRC_ANALYTICS = "analytics";
     private static final String PROP_SRC_ANALYTICS_VIEWERID = "viewer_id";
@@ -119,18 +118,13 @@ public class ReactExoplayerViewManager extends ViewGroupManager<ReactExoplayerVi
         Context context = videoView.getContext().getApplicationContext();
         String uriString = src.hasKey(PROP_SRC_URI) ? src.getString(PROP_SRC_URI) : null;
         String extension = src.hasKey(PROP_SRC_TYPE) ? src.getString(PROP_SRC_TYPE) : null;
-        String vast = src.hasKey(PROP_SRC_VAST) ? src.getString(PROP_SRC_VAST) : null;
-        //Map<String, String> externalSubtitles = src.hasKey(PROP_SRC_EXTERNAL_SUBTITLES) ? toStringMap(src.getMap(PROP_SRC_EXTERNAL_SUBTITLES)) : null;
+        String adTagUrl = src.hasKey(PROP_SRC_AD_TAG_URL) ? src.getString(PROP_SRC_AD_TAG_URL) : null;
         Map<String, String> headers = src.hasKey(PROP_SRC_HEADERS) ? toStringMap(src.getMap(PROP_SRC_HEADERS)) : null;
         ReadableMap drm = src.hasKey(PROP_SRC_DRM) ? src.getMap(PROP_SRC_DRM) : null;
         ReadableMap analytics = src.hasKey(PROP_SRC_ANALYTICS) ? src.getMap(PROP_SRC_ANALYTICS) : null;
 
-        // if (externalSubtitles != null) {
-        //     videoView.setExternalSubtitles(externalSubtitles);
-        // }
-
-        if (!TextUtils.isEmpty(vast)) {
-            videoView.setVastUrl(Uri.parse(vast));
+        if (!TextUtils.isEmpty(adTagUrl)) {
+            videoView.setAdTagUrl(Uri.parse(adTagUrl));
         }
 
         if (TextUtils.isEmpty(uriString)) {
